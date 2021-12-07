@@ -1,0 +1,19 @@
+class Solution{
+  public:
+    // s : given string
+    // return the expected answer
+    int fun(string &s) {
+        //code here
+       long long mod=1000000007;
+       int a=0,b=0,c=0;
+       
+       for(auto ch: s)
+       {
+           if(ch=='a') a = ((2*(a%mod))%mod+1)%mod;
+           else if(ch=='b' && a!=0) b=((2*(b%mod))%mod+a%mod)%mod;
+           else if(ch=='c' && b!=0) c=((2*(c%mod))%mod+b%mod)%mod;
+
+       }
+       return c;
+    }
+};
