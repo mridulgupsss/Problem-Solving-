@@ -1,0 +1,47 @@
+class Solution {
+public:
+    int numDecodings(string s) {
+        vector<int> dp(s.length(), 0);
+        int n=s.length();
+        
+        if(s[0]=='0') return 0;
+        if(n==1) return 1;
+        dp[0]=1;
+     
+        
+        for(int i=1; i<n; i++)
+        {
+            char ch=s[i];
+            char prev=s[i-1];
+            if(ch=='0')
+            {
+                int number=(prev-'0')*10 + (ch-'0');
+                if(number==10 || number==20)
+                {
+                    if(i==1) dp[i]= 1;
+                    else
+                    dp[i]=dp[i-2];
+                }
+                else
+                     return 0;
+            }
+            else
+            {
+                if(prev=='0') dp[i]=dp[i-1];
+                else
+                {
+               int number=(prev-'0')*10 + (ch-'0');
+                if(number<=26){
+                    if(i==1)dp[i]=2;
+                    else
+                    dp[i]=dp[i-1]+dp[i-2];
+                }
+                else
+                    dp[i]=dp[i-1];
+                }
+            }
+        }
+        
+        return dp[n-1];
+    }
+};
