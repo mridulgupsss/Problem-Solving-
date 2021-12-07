@@ -1,0 +1,16 @@
+class solution{
+  int FindMaxSum(int arr[], int n)
+    {
+        // Your code here
+        int include = arr[0];
+        int exclude = 0;
+        for(int i=1; i<n; i++)
+        {
+            int temp =exclude;
+            exclude=max(include, exclude);
+            include=arr[i]+ temp;
+            
+        }
+        return max(include ,  exclude );
+    }
+}
