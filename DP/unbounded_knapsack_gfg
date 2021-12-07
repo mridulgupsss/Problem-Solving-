@@ -1,0 +1,21 @@
+class Solution{
+public:
+    int knapSack(int n, int W, int val[], int wt[])
+    {
+        // code here
+        vector<int> dp(W+1,0);
+        for(int i=0; i<n; i++)
+        {
+            
+            for(int j=1; j<=W; j++)
+            {
+                if(j>=wt[i])
+                {
+                    dp[j]=max(dp[j], val[i]+dp[j-wt[i]]);
+                }
+               
+            }
+        }
+        return dp[W];
+    }
+};
