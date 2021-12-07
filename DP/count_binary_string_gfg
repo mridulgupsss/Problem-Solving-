@@ -1,0 +1,19 @@
+class Solution{
+public:
+	// #define ll long long
+	ll countStrings(int n) {
+	    if(n==1) return 2;
+	    ll mod=1000000007;
+	    ll end_1=1, end_0=1;
+	    ll end_1_curr, end_0_curr;
+	    for(int i=2; i<=n; i++)
+	    {
+	        end_1_curr=end_0;
+	        end_0_curr=(end_0%mod + end_1%mod)%mod;
+	        
+	        end_1=end_1_curr;
+	        end_0=end_0_curr;
+	    }
+	    return (end_1_curr%mod + end_0_curr%mod)%mod;
+	}
+};
