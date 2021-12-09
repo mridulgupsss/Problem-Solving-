@@ -1,0 +1,43 @@
+class Solution {
+public:
+    bool canPartition(vector<int>& arr) {
+        int sum=0;
+        for(auto val:arr)
+        {
+            sum+=val;
+        }
+        if(sum%2!=0) return false;
+        else
+        {
+            sum=sum/2;
+            int n=arr.size();
+            vector<vector<bool>>dp(n+1, vector<bool>(sum+1));
+            for(int i=0; i<=n; i++)
+            {
+                for(int j=0; j<=sum; j++)
+                {
+                    if(j==0) dp[i][j]=true;
+                    else if(i==0)dp[i][j]=false;
+                    else
+                    {
+                       if(dp[i-1][j]==true) dp[i][j]=true;
+                        else
+                        {
+                            if(j>=arr[i-1])
+                            {
+                                if(dp[i-1][j-arr[i-1]]==true) dp[i][j]=true;
+                                else dp[i][j]=false;
+                            }
+                            else
+                            {
+                                dp[i][j]=false;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            return dp[n][sum];
+        }
+    }
+};
