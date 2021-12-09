@@ -1,0 +1,52 @@
+class solution{
+  public:
+	int minDifference(int arr[], int n)  { 
+	    // Your code goes here
+	    int Total_sum=0;
+	    for(int i=0; i<n; i++)
+	    {
+	        int val=arr[i];
+	        Total_sum+=val;
+	    }
+	    
+	    
+	    // diff = Total_sum - 2*(sum of subset 1 ) // this is what i have to minimize 
+	    
+	    
+	    //creating dp of true/false 
+	    vector<vector<int>>dp(n+1, vector<int>(Total_sum+1));
+            for(int i=0; i<=n; i++)
+            {
+                for(int j=0; j<=Total_sum; j++)
+                {
+                    if(j==0) dp[i][j]=true;
+                    else if(i==0)dp[i][j]=false;
+                    else
+                    {
+                       if(dp[i-1][j]==true) dp[i][j]=true;
+                        else
+                        {
+                            if(j>=arr[i-1])
+                            {
+                                if(dp[i-1][j-arr[i-1]]==true) dp[i][j]=true;
+                                else dp[i][j]=false;
+                            }
+                            else
+                            {
+                                dp[i][j]=false;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            int ans =Total_sum;
+            for(int i=0; i<=Total_sum/2; i++)
+            {
+                if(dp[n][i]==true) ans=min(ans, abs(Total_sum-2*i));
+            }
+            return ans;
+	    
+	    
+	}
+}
