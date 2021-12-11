@@ -1,0 +1,48 @@
+	public:
+	int LongestBitonicSequence(vector<int>nums)
+	{
+	    // code here
+   
+        int n=nums.size();
+        vector<int>dp(n);
+        dp[0]=1;
+      
+        for(int i=1; i<n; i++)
+        {
+            int maxx=0; int val=nums[i];
+            for(int j=0; j<i; j++)
+            {
+                if(nums[j]<val){
+                    maxx=max(maxx, dp[j]);
+                    
+                }
+                
+            }
+            dp[i]=maxx+1;
+        
+        }
+        
+        // dec 
+        
+        vector<int>dp2(n);
+        
+        int ans=1;
+      
+        for(int i=n-1; i>=0; i--)
+        {
+            int maxx=0; int val=nums[i];
+            for(int j=i+1; j<n; j++)
+            {
+                if(nums[j]<val){
+                    maxx=max(maxx, dp2[j]);
+                    
+                }
+                
+            }
+            dp2[i]=maxx+1;
+            ans=max(ans, dp2[i]+dp[i]-1);            
+        }
+        
+        return ans;
+    
+    }
