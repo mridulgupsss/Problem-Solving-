@@ -1,0 +1,53 @@
+class Solution {
+public:
+    int minCut(string s) {
+        
+        int n=s.length();
+        bool dp_tf[n][n];
+        
+        // making true false dp
+        for(int gap=0; gap<n; gap++)
+        {
+         
+            for (int i=0, j=gap; i<n-gap; i++, j++)
+            {
+                if(gap==0) dp_tf[i][j]=true;
+                else if(gap==1) {
+                  if(s[i]==s[j])  dp_tf[i][j]=true;
+                    else dp_tf[i][j]=false ;
+                } 
+                else
+                {
+                    if(s[i]==s[j] && dp_tf[i+1][j-1]==true){
+                        dp_tf[i][j]=true;            
+                    }
+                    else
+                    {
+                        dp_tf[i][j]=false;
+                    }
+                }
+            }        
+        }
+        
+        
+        // making actual dp 1d array:
+        int dp[n]; dp[0]=0;
+        for(int j=1; j<n; j++)
+        {
+            if(dp_tf[0][j]==true) dp[j]=0;
+            else{
+            dp[j]=n-1;
+            for(int i=j; i>=1; i--)
+            {
+                if(dp_tf[i][j]==true)
+                {
+                    dp[j]=min(dp[j], dp[i-1]+1);
+                }
+            }
+            }
+           
+        }
+        return dp[n-1];
+        
+    }
+};
