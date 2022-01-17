@@ -5,19 +5,12 @@ public:
         int lo=0, hi=n-1;
         
 
-        while(lo<=hi){
-            n=hi-lo+1;
-            if(n==1) return lo;
-            if(arr[lo]>arr[lo+1]) return lo;
-            if(arr[hi]>arr[hi-1]) return hi;
-            
+        while(lo<hi){
              int m=(lo+hi)/2;
-             if(arr[m]>arr[m-1] && arr[m]>arr[m+1]) return m;
-             else if(arr[m]>arr[m-1]) lo=m+1;
-             else if(arr[m]>arr[m+1]) hi=m-1;
-             else lo=m+1; // anhalf can be taken 
+             if(arr[m]<arr[m+1]) lo=m+1;
+             else hi=m;
         }
         
-          return 0; // faaltu
+          return lo; 
         }
 };
