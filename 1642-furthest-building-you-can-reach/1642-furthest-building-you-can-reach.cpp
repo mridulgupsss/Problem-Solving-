@@ -7,7 +7,7 @@ public:
             if(arr[i+1]>arr[i]){
                 int diff=arr[i+1]-arr[i];
                 pq.push(diff);
-                if(pq.size()>ladders){
+                if(pq.size()==ladders+1){
                     int jump= pq.top(); pq.pop();
                     if(bricks - jump>=0){
                         bricks-=jump;
