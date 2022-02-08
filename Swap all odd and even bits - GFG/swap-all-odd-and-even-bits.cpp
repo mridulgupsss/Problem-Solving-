@@ -20,7 +20,7 @@ class Solution
        int n1 = (m1&n)>>1;
        int n2 = (m2&n)<<1;
     	
-    	return (unsigned int)(n1 | n2);
+    	return (n1 | n2);
     }
 };
 
