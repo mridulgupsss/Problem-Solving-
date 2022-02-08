@@ -14,13 +14,13 @@ class Solution
     //Function to swap odd and even bits.
     unsigned int swapBits(unsigned int n)
     {
-    unsigned int m1= 0xAAAAAAAA;
-     unsigned int m2= 0x55555555;
+     int m1= 0xAAAAAAAA;
+      int m2= 0x55555555;
     	
-    	unsigned int n1 = (m1&n)>>1;
-    	unsigned int n2 = (m2&n)<<1;
+       int n1 = (m1&n)>>1;
+       int n2 = (m2&n)<<1;
     	
-    	return n1 | n2;
+    	return (unsigned int)(n1 | n2);
     }
 };
 
