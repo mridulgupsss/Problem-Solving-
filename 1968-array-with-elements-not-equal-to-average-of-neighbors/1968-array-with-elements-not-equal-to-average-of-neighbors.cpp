@@ -1,22 +1,17 @@
 class Solution {
-public:
+public:  // O(n) solution discuss section
     vector<int> rearrangeArray(vector<int>& arr) {
         int n=arr.size();
-        sort(arr.begin(), arr.end());
-    vector<int> ans(n);
-        int b=n-1;
-        int a=0;
-        int i=0;
-        while(i<n){
-            if(i%2==0){
-                ans[i++]=arr[a++];
-                
+        if(n==1) return arr;
+        
+        bool a = arr[0]<arr[1];
+        for(int i=1; i<n-1; i++){
+            if((a && arr[i+1]>arr[i]) || (!a && arr[i+1]<arr[i])){
+                swap(arr[i], arr[i+1]);
             }
-            else{
-                ans[i++]=arr[b--];
-            }
+            a=!a;
         }
         
-        return ans;
+        return arr;
     }
 };
