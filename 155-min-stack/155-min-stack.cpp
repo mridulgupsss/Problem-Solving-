@@ -1,5 +1,5 @@
 class MinStack {
-public:
+public: // storing gap strategy
     stack<long> st;
     long mn;
     MinStack() {
@@ -8,30 +8,28 @@ public:
     
     void push(int val) {
         if(st.empty()){
-            st.push(val);
+            st.push(0);  // storing gap
             mn=val;
         }
         else{
-            if(val>=mn){
-                st.push(val);
-            }
-            else{
-                st.push(2*1LL*val-mn);
+              st.push(val-mn);
+            if(val<mn){
                 mn=val;
             }
         }
     }
     
     void pop() {
-        if(st.top()>=mn) st.pop();
-        else {
-            mn= 2*1LL*mn-st.top();
-            st.pop();
+        
+        if(st.top()<0){
+           mn=mn-st.top(); 
+            
         }
+        st.pop();
     }
     
     int top() {
-       if(st.top()>=mn) return st.top();
+       if(st.top()>=0) return mn+st.top();
         else return mn;
     }
     
