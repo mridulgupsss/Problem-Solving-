@@ -1,57 +1,31 @@
 class Solution {
 public:
-    int trap(vector<int>& height) {
-        vector<int> left(height.size()), right(height.size());
-         int n =height.size();
-        int mn = height[0];
-        int idx=0;
-                left[0]=0;
-        right[n-1]=n-1;
-       
-        for(int i=1; i<n; i++){
-        if(height[i]>=mn){
-            left[i]=i;
-            idx=i;
-            mn=height[i];
-        }
-            else{
-                left[i]=idx;
-            }
-  
-        }
-  
-        idx=n-1;
-        mn = height[idx];
-        for(int i=n-2; i>=0; i--){
-        if(height[i]>=mn){
-            right[i]=i;
-            idx=i;
-            mn=height[i];
-        }
-            else{
-               right[i]=idx;
-            }            
-            
-  
-        }
-
+    int trap(vector<int>& arr) {
+        int n= arr.size();
+        int i=0, j=n-1;
         int ans=0;
-        for(int i=1;i<n-1; i++){
-            int r = height[right[i+1]];
-            int l  =height[left[i-1]];
+        int left_max=arr[0], right_max=arr[n-1];
+        while(i<j){
             
-            int less = min(l,r);
-            if(less>height[i]){
-                ans+=(less-height[i]);
-                
-                    
+           if(arr[i]>left_max){
+                left_max=arr[i];
             }
+            if(arr[j]>right_max){
+                right_max=arr[j];
+            }     
+          
+            if(left_max<right_max){
+                ans+=left_max-arr[i]; i++;
+            }
+            else {
+                ans+=right_max-arr[j]; j--;
+            }
+           
+            
+            
+            
+
         }
-        
-        
         return ans;
-        
-        
-        
     }
 };
