@@ -11,30 +11,18 @@
  */
 class Solution {
 public:
- TreeNode* prev;
-TreeNode * helper(TreeNode* root){
-if(!root) return root;
-            TreeNode* lnode = helper(root->left);
-        TreeNode* rnode =  helper(root->right);
-    TreeNode* head=lnode;
-if(head){
-     while(head->right!=NULL){
-     head=head->right;
- }
-    head->right=rnode;
-}
-    
-if(lnode) root->right=lnode;
-    else root->right=rnode;
-    
-    root->left=NULL;
-    return root;
-    
-}
+    TreeNode *prev=NULL;
     void flatten(TreeNode* root) {
-             if(root==NULL)return ;
-            root=helper(root);
-        
-
+        if(!root) return;
+        TreeNode *l=root->left;
+         TreeNode *r=root->right;
+        if(prev==NULL) prev=root;
+        else{
+            prev->left=NULL;
+            prev->right=root;
+            prev=root;
+        } 
+        flatten(l);
+        flatten(r);
     }
-};
+}; 
