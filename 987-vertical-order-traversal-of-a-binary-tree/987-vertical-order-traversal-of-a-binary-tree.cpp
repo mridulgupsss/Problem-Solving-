@@ -1,44 +1,33 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
 class Solution {
 public:
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
-vector<vector<int>> verticalTraversal(TreeNode* root) {
-	map<int, vector<int> > m;  // when iterate map, key is already the order of x-axis
-	queue<pair<int, TreeNode*> > q; // for level traversal
-	q.push(make_pair(0, root));  // root default x-axis is 0
-	while(!q.empty()) {
-		multiset<pair<int, int> > tmp;  // k: x-axis, v:val Already solved the case when the position is ths same
-		int len=q.size();
-		for(int i=0;i<len;++i) {
-			auto p=q.front();q.pop();
-			tmp.insert(make_pair(p.first, p.second->val));
-			if (p.second->left) q.push(make_pair(p.first-1, p.second->left));
-			if (p.second->right) q.push(make_pair(p.first+1, p.second->right));
-		}
-
-		for(auto p : tmp) m[p.first].push_back(p.second);
-	}
-
-	vector<vector<int> > res;
-	for(auto kv : m) res.push_back(kv.second);
-	return res;
-}
+    vector<vector<int>> verticalTraversal(TreeNode* root) {
+        queue<pair<TreeNode*,int>> Q;
+        Q.push({root, 0});
+        map<int,vector<int>> mp;
+        vector<vector<int>> ret;
+        while(Q.size()){
+            int n = Q.size();
+            map<int,vector<int>> m;
+            while(n--){
+                TreeNode* node = Q.front().first;
+                int axis = Q.front().second;
+                Q.pop();
+                m[axis].push_back(node->val);
+                if(node->left) Q.push({node->left, axis-1});
+                if(node->right) Q.push({node->right, axis+1});
+            }
+            for(auto &it : m){
+                cout<<it.first<<" ";
+                sort(it.second.begin(),it.second.end());
+                for(int x: it.second){
+                    mp[it.first].push_back(x);
+                }
+            }
+            cout<<endl;
+        }
+        for(auto &it: mp){
+            ret.push_back(it.second);
+        }
+        return ret;
+    }
 };
