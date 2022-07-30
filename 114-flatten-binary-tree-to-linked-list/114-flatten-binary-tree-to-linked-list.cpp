@@ -11,27 +11,30 @@
  */
 class Solution {
 public:
-    void helper(TreeNode* root, vector<TreeNode*> &ans){
-        if(root==NULL) return ;
-        ans.push_back(root);
-        helper(root->left, ans);
-        helper(root->right, ans);
-        
-    }
+ TreeNode* prev;
+TreeNode * helper(TreeNode* root){
+if(!root) return root;
+            TreeNode* lnode = helper(root->left);
+        TreeNode* rnode =  helper(root->right);
+    TreeNode* head=lnode;
+if(head){
+     while(head->right!=NULL){
+     head=head->right;
+ }
+    head->right=rnode;
+}
+    
+if(lnode) root->right=lnode;
+    else root->right=rnode;
+    
+    root->left=NULL;
+    return root;
+    
+}
     void flatten(TreeNode* root) {
+             if(root==NULL)return ;
+            root=helper(root);
         
-        vector<TreeNode*> ans;
-        helper(root, ans);
-        if(ans.size()==0 || ans.size()==1) return;
-        TreeNode* curr=ans[0];
-        for(int i=0; i<ans.size()-1; i++){
-            TreeNode* next=ans[i+1];
-            curr->left=NULL;
-            curr->right=next;
-            curr=next;
-        }
-        curr->right=NULL;
-        
-        
+
     }
 };
