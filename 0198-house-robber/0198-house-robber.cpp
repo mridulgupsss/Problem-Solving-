@@ -2,23 +2,24 @@ class Solution {
 public:
 
     int rob(vector<int>& nums) {
-        vector<int> dp(nums.size(), -1);
+
       
         
-        dp[0]= nums[0];
-      //  if(idx<0) return 0;
-        
-        //if(mem[idx]!=-1) return mem[idx];
+        int prev1= nums[0];
+        int prev2=0;
        
         for(int i=0; i<nums.size(); i++){
              int taken = nums[i];
-            if(i-2>=0)taken+=dp[i-2];
+            if(i-2>=0)taken+=prev2;
              int nottaken =0;
-            if(i>=1) nottaken=dp[i-1];
-            dp[i]=max(taken, nottaken);
+            if(i>=1) nottaken=prev1;
+            int curr=max(taken, nottaken);
+            
+            prev2=prev1;
+            prev1=curr;
         }
         
-        return dp[nums.size()-1];
+        return prev1;
         
      
     }
