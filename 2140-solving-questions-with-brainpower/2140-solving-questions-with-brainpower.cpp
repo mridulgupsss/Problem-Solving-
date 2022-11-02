@@ -1,17 +1,18 @@
 class Solution {
 public:
-    long long recursive(vector<vector<int>>& questions, int idx, vector<long long> &dp ){
-        
-        if(idx==questions.size()-1) return questions[idx][0];
-        if(idx>questions.size()-1) return 0;
-        if(dp[idx]!=-1) return dp[idx];
-        long long pick = questions[idx][0] + recursive(questions, idx+questions[idx][1]+1, dp);
-        long long notpick = recursive(questions, idx+1, dp);
-        return dp[idx] = max(pick, notpick);
-        
-    }
+
     long long mostPoints(vector<vector<int>>& questions) {
-        vector<long long> dp(questions.size()-1, -1);
-        return recursive(questions, 0, dp);
+        vector<long long> dp(questions.size(), -1);
+        int n =questions.size();
+        dp[n-1]=questions[n-1][0];
+        for(int i=n-2; i>=0; i--){
+        long long pick = questions[i][0] ;
+            if(i+questions[i][1]+1<n) pick+= dp[i+questions[i][1]+1];
+        long long notpick = 0;
+            if(i<n-1) notpick=dp[i+1];
+         dp[i] = max(pick, notpick);
+        }
+        
+        return dp[0];
     }
 };
